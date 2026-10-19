@@ -1,5 +1,12 @@
 # Proyecto 2 
 
+
+
+
+https://github.com/user-attachments/assets/a5790e85-bb7a-42a2-92ac-19bd0fe9bbf0
+
+
+
 ## Requisitos e instalación
 
 - Python **3.10 o superior** (probado con Python 3.14.5 en Windows 11).
@@ -39,7 +46,9 @@ python -m unittest discover -v
 ```
 
 31 pruebas (lector, conversión a CNF, CYK). Resultado real de la última ejecución: `Ran 31 tests ... OK`
-(ver [docs/ejecuciones/pruebas.txt](docs/ejecuciones/pruebas.txt)).
+
+
+(ver [docs/ejecuciones/pruebas.txt](PROYECTO-2-TEORIA/docs/ejecuciones/pruebas.txt)).
 
 Medición de tiempos para distintas longitudes de entrada:
 
