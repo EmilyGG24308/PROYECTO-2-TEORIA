@@ -1,0 +1,16 @@
+Gramatica de ingles: 'she eats a cake' + k veces 'with a fork'
+ n tokens  acepta  mediana ms
+        4    True      0.0067
+        7    True      0.0174
+       10    True      0.0349
+       16    True      0.0949
+       28    True      0.4060
+       52    True      2.2605
+
+Gramatica 1.txt en CNF: 'id' + k veces '+ id'
+ n tokens  acepta  mediana ms
+        3    True      0.0053
+        7    True      0.0253
+       15    True      0.1409
+       31    True      0.9127
+       63    True      6.6856

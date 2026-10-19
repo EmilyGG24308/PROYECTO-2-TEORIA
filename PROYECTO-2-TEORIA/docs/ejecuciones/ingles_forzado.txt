@@ -1,0 +1,73 @@
+Gramatica cargada de gramaticas\ingles.txt con simbolo inicial S.
+
+--- Gramatica original (inicial: S) ---
+S   -> NP VP
+VP  -> VP PP | V NP | cooks | drinks | eats | cuts
+PP  -> P NP
+NP  -> Det N | he | she
+V   -> cooks | drinks | eats | cuts
+P   -> in | with
+N   -> cat | dog | beer | cake | juice | meat | soup | fork | knife | oven | spoon
+Det -> a | the
+No terminales: S, VP, PP, NP, V, P, N, Det
+Terminales: a, beer, cake, cat, cooks, cuts, dog, drinks, eats, fork, he, in, juice, knife, meat, oven, she, soup, spoon, the, with
+
+La gramatica SI esta en CNF.
+
+=========== Conversion a CNF por etapas ===========
+
+>>> 1. Simbolo inicial: Nuevo inicial si S es anulable y aparece a la derecha.
+    No hace falta un inicial nuevo: S no es anulable.
+    (Esta etapa no cambio la gramatica.)
+
+>>> 2. Eliminar producciones epsilon: Anulables por punto fijo y combinaciones.
+    No hay no terminales anulables.
+    (Esta etapa no cambio la gramatica.)
+
+>>> 3. Eliminar producciones unitarias: Cierre transitivo de A -> B.
+    No hay producciones unitarias.
+    (Esta etapa no cambio la gramatica.)
+
+>>> 4. Eliminar simbolos inutiles: Primero no generadores, despues inalcanzables.
+    No generadores: ninguno
+    Inalcanzables (calculados despues): ninguno
+    (Esta etapa no cambio la gramatica.)
+
+>>> 5. Sustituir terminales: Terminales en lados derechos de longitud >= 2.
+    Ningun lado derecho de longitud >= 2 contiene terminales.
+    (Esta etapa no cambio la gramatica.)
+
+>>> 6. Binarizar: Lados derechos de longitud >= 3 en cadenas de binarias.
+    No hay lados derechos de longitud >= 3.
+    (Esta etapa no cambio la gramatica.)
+
+>>> 7. Validacion final: Solo A -> B C, A -> a y, si aplica, inicial -> ε.
+    Cumple CNF: 30 producciones, 8 no terminales.
+
+--- Gramatica en CNF usada por CYK (inicial: S) ---
+S   -> NP VP
+VP  -> VP PP | V NP | cooks | drinks | eats | cuts
+PP  -> P NP
+NP  -> Det N | he | she
+V   -> cooks | drinks | eats | cuts
+P   -> in | with
+N   -> cat | dog | beer | cake | juice | meat | soup | fork | knife | oven | spoon
+Det -> a | the
+
+============================================================
+
+Entrada: 'he cooks'
+Tokens (modo palabras, 2): he cooks
+
+Resultado: SÍ, la cadena pertenece al lenguaje.
+Motivo: S esta en la celda que cubre toda la entrada (longitud 2, posicion 1).
+Tiempo de validacion CYK: 0.0131 ms (llenado de la tabla y decision; excluye lectura, conversion, tokenizacion, impresion y el arbol)
+Tiempo de reconstruccion del arbol (medido aparte): 0.0061 ms
+
+Arbol de analisis (de la gramatica CNF; puede contener auxiliares TERM_* / BIN*):
+S
+├── NP
+│   └── he
+└── VP
+    └── cooks
+Notacion con corchetes: [S [NP he] [VP cooks]]

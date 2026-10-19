@@ -1,0 +1,152 @@
+Gramatica cargada de gramaticas\1.txt con simbolo inicial E.
+
+--- Gramatica original (inicial: E) ---
+E -> T X
+X -> + T X | ε
+T -> F Y
+Y -> * F Y | ε
+F -> ( E ) | id
+No terminales: E, X, T, Y, F
+Terminales: (, ), *, +, id
+
+La gramatica NO esta en CNF:
+  - X -> + T X: lado derecho de longitud 3 (> 2)
+  - X -> ε: epsilon solo se permite en el simbolo inicial
+  - Y -> * F Y: lado derecho de longitud 3 (> 2)
+  - Y -> ε: epsilon solo se permite en el simbolo inicial
+  - F -> ( E ): lado derecho de longitud 3 (> 2)
+
+=========== Conversion a CNF por etapas ===========
+
+>>> 1. Simbolo inicial: Nuevo inicial si S es anulable y aparece a la derecha.
+    No hace falta un inicial nuevo: E no es anulable.
+    (Esta etapa no cambio la gramatica.)
+
+>>> 2. Eliminar producciones epsilon: Anulables por punto fijo y combinaciones.
+    Anulables: {X, Y}
+    La cadena vacia no pertenece al lenguaje.
+E -> T X | T
+X -> + T X | + T
+T -> F Y | F
+Y -> * F Y | * F
+F -> ( E ) | id
+
+>>> 3. Eliminar producciones unitarias: Cierre transitivo de A -> B.
+    Pares unitarios (A, B) con A =>* B: (E, F), (E, T), (T, F)
+E -> T X | ( E ) | id | F Y
+X -> + T X | + T
+T -> F Y | ( E ) | id
+Y -> * F Y | * F
+F -> ( E ) | id
+
+>>> 4. Eliminar simbolos inutiles: Primero no generadores, despues inalcanzables.
+    No generadores: ninguno
+    Inalcanzables (calculados despues): ninguno
+    (Esta etapa no cambio la gramatica.)
+
+>>> 5. Sustituir terminales: Terminales en lados derechos de longitud >= 2.
+    Auxiliares (reutilizados en todas las producciones): TERM_PAR_IZQ -> (, TERM_PAR_DER -> ), TERM_MAS -> +, TERM_POR -> *
+E            -> T X | TERM_PAR_IZQ E TERM_PAR_DER | id | F Y
+X            -> TERM_MAS T X | TERM_MAS T
+T            -> F Y | TERM_PAR_IZQ E TERM_PAR_DER | id
+Y            -> TERM_POR F Y | TERM_POR F
+F            -> TERM_PAR_IZQ E TERM_PAR_DER | id
+TERM_PAR_IZQ -> (
+TERM_PAR_DER -> )
+TERM_MAS     -> +
+TERM_POR     -> *
+
+>>> 6. Binarizar: Lados derechos de longitud >= 3 en cadenas de binarias.
+    Auxiliares de binarizacion: BIN1 =>* E TERM_PAR_DER, BIN2 =>* T X, BIN3 =>* F Y
+E            -> T X | TERM_PAR_IZQ BIN1 | id | F Y
+X            -> TERM_MAS BIN2 | TERM_MAS T
+T            -> F Y | TERM_PAR_IZQ BIN1 | id
+Y            -> TERM_POR BIN3 | TERM_POR F
+F            -> TERM_PAR_IZQ BIN1 | id
+TERM_PAR_IZQ -> (
+TERM_PAR_DER -> )
+TERM_MAS     -> +
+TERM_POR     -> *
+BIN1         -> E TERM_PAR_DER
+BIN2         -> T X
+BIN3         -> F Y
+
+>>> 7. Validacion final: Solo A -> B C, A -> a y, si aplica, inicial -> ε.
+    Cumple CNF: 20 producciones, 12 no terminales.
+
+--- Gramatica en CNF usada por CYK (inicial: E) ---
+E            -> T X | TERM_PAR_IZQ BIN1 | id | F Y
+X            -> TERM_MAS BIN2 | TERM_MAS T
+T            -> F Y | TERM_PAR_IZQ BIN1 | id
+Y            -> TERM_POR BIN3 | TERM_POR F
+F            -> TERM_PAR_IZQ BIN1 | id
+TERM_PAR_IZQ -> (
+TERM_PAR_DER -> )
+TERM_MAS     -> +
+TERM_POR     -> *
+BIN1         -> E TERM_PAR_DER
+BIN2         -> T X
+BIN3         -> F Y
+
+============================================================
+
+Entrada: '(id*id)+id'
+Tokens (modo simbolos, 7): ( id * id ) + id
+
+Tabla CYK (fila l = longitud de la subcadena, columna i = token inicial):
+        i=1          i=2          i=3          i=4          i=5          i=6          i=7     
+    ------------------------------------------------------------------------------------------
+l=7    E,BIN2   
+l=6      ∅            ∅      
+l=5    E,T,F          ∅            ∅      
+l=4      ∅           BIN1          ∅            ∅      
+l=3      ∅         E,T,BIN3        ∅            ∅            ∅      
+l=2      ∅            ∅            Y           BIN1          ∅            X      
+l=1 TERM_PAR_IZQ    E,T,F       TERM_POR      E,T,F     TERM_PAR_DER   TERM_MAS      E,T,F    
+    ------------------------------------------------------------------------------------------
+tok      (            id           *            id           )            +            id     
+
+Resultado: SÍ, la cadena pertenece al lenguaje.
+Motivo: E esta en la celda que cubre toda la entrada (longitud 7, posicion 1).
+Tiempo de validacion CYK: 0.0381 ms (llenado de la tabla y decision; excluye lectura, conversion, tokenizacion, impresion y el arbol)
+Tiempo de reconstruccion del arbol (medido aparte): 0.0133 ms
+
+Arbol de analisis (de la gramatica CNF; puede contener auxiliares TERM_* / BIN*):
+E
+├── T
+│   ├── TERM_PAR_IZQ
+│   │   └── (
+│   └── BIN1
+│       ├── E
+│       │   ├── F
+│       │   │   └── id
+│       │   └── Y
+│       │       ├── TERM_POR
+│       │       │   └── *
+│       │       └── F
+│       │           └── id
+│       └── TERM_PAR_DER
+│           └── )
+└── X
+    ├── TERM_MAS
+    │   └── +
+    └── T
+        └── id
+Notacion con corchetes: [E [T [TERM_PAR_IZQ (] [BIN1 [E [F id] [Y [TERM_POR *] [F id]]] [TERM_PAR_DER )]]] [X [TERM_MAS +] [T id]]]
+
+============================================================
+
+Entrada: 'id +'
+Tokens (modo simbolos, 2): id +
+
+Tabla CYK (fila l = longitud de la subcadena, columna i = token inicial):
+      i=1      i=2   
+    -----------------
+l=2    ∅    
+l=1  E,T,F   TERM_MAS
+    -----------------
+tok    id       +    
+
+Resultado: NO, la cadena NO pertenece al lenguaje.
+Motivo: E no esta en la celda que cubre toda la entrada (esa celda esta vacia).
+Tiempo de validacion CYK: 0.0058 ms (llenado de la tabla y decision; excluye lectura, conversion, tokenizacion, impresion y el arbol)

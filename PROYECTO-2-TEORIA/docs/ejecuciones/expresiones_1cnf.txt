@@ -1,0 +1,81 @@
+Gramatica cargada de gramaticas\1-cnf.txt con simbolo inicial E.
+
+--- Gramatica original (inicial: E) ---
+E -> T X | F Y | L Z | id
+X -> P W | P T
+T -> F Y | L Z | id
+Y -> M V | M F
+F -> L Z | id
+Z -> E R
+W -> T X
+V -> F Y
+L -> (
+R -> )
+P -> +
+M -> *
+No terminales: E, X, T, Y, F, Z, W, V, L, R, P, M
+Terminales: (, ), *, +, id
+
+La gramatica SI esta en CNF.
+
+La gramatica ya esta en CNF: se usa sin transformaciones.
+
+--- Gramatica en CNF usada por CYK (inicial: E) ---
+E -> T X | F Y | L Z | id
+X -> P W | P T
+T -> F Y | L Z | id
+Y -> M V | M F
+F -> L Z | id
+Z -> E R
+W -> T X
+V -> F Y
+L -> (
+R -> )
+P -> +
+M -> *
+
+============================================================
+
+Entrada: '(id*id)+id'
+Tokens (modo simbolos, 7): ( id * id ) + id
+
+Tabla CYK (fila l = longitud de la subcadena, columna i = token inicial):
+     i=1   i=2   i=3   i=4   i=5   i=6   i=7 
+    -----------------------------------------
+l=7  E,W 
+l=6   ∅     ∅  
+l=5 E,T,F   ∅     ∅  
+l=4   ∅     Z     ∅     ∅  
+l=3   ∅   E,T,V   ∅     ∅     ∅  
+l=2   ∅     ∅     Y     Z     ∅     X  
+l=1   L   E,T,F   M   E,T,F   R     P   E,T,F
+    -----------------------------------------
+tok   (     id    *     id    )     +     id 
+
+Resultado: SÍ, la cadena pertenece al lenguaje.
+Motivo: E esta en la celda que cubre toda la entrada (longitud 7, posicion 1).
+Tiempo de validacion CYK: 0.0390 ms (llenado de la tabla y decision; excluye lectura, conversion, tokenizacion, impresion y el arbol)
+Tiempo de reconstruccion del arbol (medido aparte): 0.0103 ms
+
+Arbol de analisis (de la gramatica CNF; puede contener auxiliares TERM_* / BIN*):
+E
+├── T
+│   ├── L
+│   │   └── (
+│   └── Z
+│       ├── E
+│       │   ├── F
+│       │   │   └── id
+│       │   └── Y
+│       │       ├── M
+│       │       │   └── *
+│       │       └── F
+│       │           └── id
+│       └── R
+│           └── )
+└── X
+    ├── P
+    │   └── +
+    └── T
+        └── id
+Notacion con corchetes: [E [T [L (] [Z [E [F id] [Y [M *] [F id]]] [R )]]] [X [P +] [T id]]]

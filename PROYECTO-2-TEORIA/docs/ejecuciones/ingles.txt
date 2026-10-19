@@ -1,0 +1,111 @@
+Gramatica cargada de gramaticas\ingles.txt con simbolo inicial S.
+
+--- Gramatica original (inicial: S) ---
+S   -> NP VP
+VP  -> VP PP | V NP | cooks | drinks | eats | cuts
+PP  -> P NP
+NP  -> Det N | he | she
+V   -> cooks | drinks | eats | cuts
+P   -> in | with
+N   -> cat | dog | beer | cake | juice | meat | soup | fork | knife | oven | spoon
+Det -> a | the
+No terminales: S, VP, PP, NP, V, P, N, Det
+Terminales: a, beer, cake, cat, cooks, cuts, dog, drinks, eats, fork, he, in, juice, knife, meat, oven, she, soup, spoon, the, with
+
+La gramatica SI esta en CNF.
+
+La gramatica ya esta en CNF: se usa sin transformaciones.
+
+--- Gramatica en CNF usada por CYK (inicial: S) ---
+S   -> NP VP
+VP  -> VP PP | V NP | cooks | drinks | eats | cuts
+PP  -> P NP
+NP  -> Det N | he | she
+V   -> cooks | drinks | eats | cuts
+P   -> in | with
+N   -> cat | dog | beer | cake | juice | meat | soup | fork | knife | oven | spoon
+Det -> a | the
+
+============================================================
+
+Entrada: 'She eats a cake with a fork'
+Tokens (modo palabras, 7): she eats a cake with a fork
+
+Tabla CYK (fila l = longitud de la subcadena, columna i = token inicial):
+    i=1  i=2  i=3  i=4  i=5  i=6  i=7 
+    ----------------------------------
+l=7  S  
+l=6  ∅    VP 
+l=5  ∅    ∅    ∅  
+l=4  S    ∅    ∅    ∅  
+l=3  ∅    VP   ∅    ∅    PP 
+l=2  S    ∅    NP   ∅    ∅    NP 
+l=1  NP  VP,V Det   N    P   Det   N  
+    ----------------------------------
+tok she  eats  a   cake with  a   fork
+
+Resultado: SÍ, la cadena pertenece al lenguaje.
+Motivo: S esta en la celda que cubre toda la entrada (longitud 7, posicion 1).
+Tiempo de validacion CYK: 0.0336 ms (llenado de la tabla y decision; excluye lectura, conversion, tokenizacion, impresion y el arbol)
+Tiempo de reconstruccion del arbol (medido aparte): 0.0132 ms
+
+Arbol de analisis (de la gramatica CNF; puede contener auxiliares TERM_* / BIN*):
+S
+├── NP
+│   └── she
+└── VP
+    ├── VP
+    │   ├── V
+    │   │   └── eats
+    │   └── NP
+    │       ├── Det
+    │       │   └── a
+    │       └── N
+    │           └── cake
+    └── PP
+        ├── P
+        │   └── with
+        └── NP
+            ├── Det
+            │   └── a
+            └── N
+                └── fork
+Notacion con corchetes: [S [NP she] [VP [VP [V eats] [NP [Det a] [N cake]]] [PP [P with] [NP [Det a] [N fork]]]]]
+
+============================================================
+
+Entrada: 'the cat drinks beer'
+Tokens (modo palabras, 4): the cat drinks beer
+
+Tabla CYK (fila l = longitud de la subcadena, columna i = token inicial):
+     i=1    i=2    i=3    i=4  
+    ---------------------------
+l=4   ∅   
+l=3   S      ∅   
+l=2   NP     ∅      ∅   
+l=1  Det     N     VP,V    N   
+    ---------------------------
+tok  the    cat   drinks  beer 
+
+Resultado: NO, la cadena NO pertenece al lenguaje.
+Motivo: S no esta en la celda que cubre toda la entrada (esa celda esta vacia).
+Tiempo de validacion CYK: 0.0105 ms (llenado de la tabla y decision; excluye lectura, conversion, tokenizacion, impresion y el arbol)
+
+============================================================
+
+Entrada: 'she eats a pizza'
+Tokens (modo palabras, 4): she eats a pizza
+
+Tabla CYK (fila l = longitud de la subcadena, columna i = token inicial):
+     i=1   i=2   i=3   i=4 
+    -----------------------
+l=4   ∅  
+l=3   ∅     ∅  
+l=2   S     ∅     ∅  
+l=1   NP   VP,V  Det    ∅  
+    -----------------------
+tok  she   eats   a   pizza
+
+Resultado: NO, la cadena NO pertenece al lenguaje.
+Motivo: Tokens desconocidos: 'pizza'. Ninguna produccion A -> a los genera, asi que su celda queda vacia y ninguna celda superior puede cubrir toda la entrada.
+Tiempo de validacion CYK: 0.0076 ms (llenado de la tabla y decision; excluye lectura, conversion, tokenizacion, impresion y el arbol)

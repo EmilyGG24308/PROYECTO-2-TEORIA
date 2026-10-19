@@ -1,0 +1,36 @@
+test_1_txt_queda_en_cnf_y_conserva_el_lenguaje (tests.test_cnf.PruebasConversion.test_1_txt_queda_en_cnf_y_conserva_el_lenguaje) ... ok
+test_anulabilidad_indirecta_y_varios_anulables (tests.test_cnf.PruebasConversion.test_anulabilidad_indirecta_y_varios_anulables) ... ok
+test_cadena_vacia_aceptada_con_inicial_nuevo (tests.test_cnf.PruebasConversion.test_cadena_vacia_aceptada_con_inicial_nuevo) ... ok
+test_cadena_vacia_rechazada (tests.test_cnf.PruebasConversion.test_cadena_vacia_rechazada) ... ok
+test_cadenas_y_ciclos_de_unitarias (tests.test_cnf.PruebasConversion.test_cadenas_y_ciclos_de_unitarias) ... ok
+test_etapas_sin_cambios_se_marcan (tests.test_cnf.PruebasConversion.test_etapas_sin_cambios_se_marcan) ... ok
+test_gramatica_ya_en_cnf (tests.test_cnf.PruebasConversion.test_gramatica_ya_en_cnf) ... ok
+test_ingles_convertido_conserva_lenguaje (tests.test_cnf.PruebasConversion.test_ingles_convertido_conserva_lenguaje) ... ok
+test_lenguaje_vacio (tests.test_cnf.PruebasConversion.test_lenguaje_vacio) ... ok
+test_nombres_auxiliares_no_colisionan (tests.test_cnf.PruebasConversion.test_nombres_auxiliares_no_colisionan) ... ok
+test_producciones_largas_con_terminales_mezclados (tests.test_cnf.PruebasConversion.test_producciones_largas_con_terminales_mezclados) ... ok
+test_simbolos_no_generadores_e_inalcanzables (tests.test_cnf.PruebasConversion.test_simbolos_no_generadores_e_inalcanzables) ... ok
+test_cadena_vacia (tests.test_cyk.PruebasCYK.test_cadena_vacia) ... ok
+test_cyk_exige_cnf (tests.test_cyk.PruebasCYK.test_cyk_exige_cnf) ... ok
+test_expresiones_con_1_txt_y_con_1_cnf_txt (tests.test_cyk.PruebasCYK.test_expresiones_con_1_txt_y_con_1_cnf_txt) ... ok
+test_gramatica_ambigua_reconstruye_arbol_valido (tests.test_cyk.PruebasCYK.test_gramatica_ambigua_reconstruye_arbol_valido) ... ok
+test_ingles (tests.test_cyk.PruebasCYK.test_ingles) ... ok
+test_ingles_mayusculas_se_normalizan (tests.test_cyk.PruebasCYK.test_ingles_mayusculas_se_normalizan) ... ok
+test_tabla_cyk_contenido (tests.test_cyk.PruebasCYK.test_tabla_cyk_contenido) ... ok
+test_token_desconocido_explica_rechazo (tests.test_cyk.PruebasCYK.test_token_desconocido_explica_rechazo) ... ok
+test_tokenizacion_de_expresiones (tests.test_cyk.PruebasCYK.test_tokenizacion_de_expresiones) ... ok
+test_tokenizacion_de_palabras (tests.test_cyk.PruebasCYK.test_tokenizacion_de_palabras) ... ok
+test_archivo_vacio_o_solo_comentarios (tests.test_lector.PruebasLector.test_archivo_vacio_o_solo_comentarios) ... ok
+test_clasificacion_usa_todos_los_lados_izquierdos (tests.test_lector.PruebasLector.test_clasificacion_usa_todos_los_lados_izquierdos) ... ok
+test_epsilon_unicode (tests.test_lector.PruebasLector.test_epsilon_unicode) ... ok
+test_inicial_inexistente (tests.test_lector.PruebasLector.test_inicial_inexistente) ... ok
+test_lee_1_txt_con_epsilon_e_id_como_un_terminal (tests.test_lector.PruebasLector.test_lee_1_txt_con_epsilon_e_id_como_un_terminal) ... ok
+test_lineas_mal_formadas_informan_numero (tests.test_lector.PruebasLector.test_lineas_mal_formadas_informan_numero) ... ok
+test_no_terminales_de_varios_caracteres (tests.test_lector.PruebasLector.test_no_terminales_de_varios_caracteres) ... ok
+test_simbolo_inicial_explicito (tests.test_lector.PruebasLector.test_simbolo_inicial_explicito) ... ok
+test_varias_lineas_mismo_lado_izquierdo_y_duplicados (tests.test_lector.PruebasLector.test_varias_lineas_mismo_lado_izquierdo_y_duplicados) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 3.261s
+
+OK
