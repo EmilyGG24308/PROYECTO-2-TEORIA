@@ -5,6 +5,8 @@
 
 https://github.com/user-attachments/assets/a5790e85-bb7a-42a2-92ac-19bd0fe9bbf0
 
+link por si no se ve bien: https://canva.link/esv6t7z8n7hnhy2
+
 
 
 ## Requisitos e instalación
